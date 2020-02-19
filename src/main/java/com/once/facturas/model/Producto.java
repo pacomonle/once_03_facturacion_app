@@ -19,8 +19,33 @@ class Producto {
     @Size(min = 100, max = 300)
     private String descripcion;
 
+    @Size(min = 100, max = 300)
     private String fabricante;
 
     private Float precio;
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getFabricante() {
+        return fabricante;
+    }
+
+    public void setFabricante(String fabricante) {
+        this.fabricante = fabricante;
+    }
+
+    public Float getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Float precio) {
+		this.precio = precio;
+	}
     
 }

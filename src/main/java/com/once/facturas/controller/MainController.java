@@ -4,6 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * MainController es el controlador de la aplicación Facturas,
+ * que es una aplicación MVC (Modelo Vista Controlador)
+ * 
+ * 
+ */
+
 @Controller
 class MainController {
     @GetMapping("/hello") // Escucho al GET en /time
