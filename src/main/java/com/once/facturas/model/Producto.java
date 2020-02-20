@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-class Producto {
+public class Producto {
 
     @Id
     @NotNull
@@ -16,10 +16,10 @@ class Producto {
     private Long id;
 
     @NotNull
-    @Size(min = 100, max = 300)
+    @Size(min = 5, max = 300)
     private String descripcion;
 
-    @Size(min = 100, max = 300)
+    @Size(min = 5, max = 300)
     private String fabricante;
 
     private Float precio;

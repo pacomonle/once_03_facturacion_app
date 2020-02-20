@@ -1,11 +1,20 @@
 package com.once.facturas.controller;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import javax.websocket.server.PathParam;
+
+import com.once.facturas.model.Producto;
 import com.once.facturas.model.ProductoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 
 /**
  * MainController es el controlador de la aplicación Facturas,
@@ -14,11 +23,32 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 
  */
 
-@Controller
-class MainController {
+@RestController
+@RequestMapping(value = "/productos")
+class ProductoController {
     
     @Autowired
     ProductoRepository pr;
+
+
+    @GetMapping("/")
+    public Iterable<Producto> getAllProductos(){
+        return pr.findAll();
+    }
+
+    @GetMapping("{id}/")
+    public Producto getProducto(
+            @PathVariable("id") Long id
+        ){
+            
+         try {
+            return pr.findById(id).get(); 
+         } catch (NoSuchElementException e) {
+             return null;
+         }
+            
+        }
+
 
     @GetMapping("/hello") // Escucho al GET en /hello
     @ResponseBody // Haré un body html para devolver la página completa
