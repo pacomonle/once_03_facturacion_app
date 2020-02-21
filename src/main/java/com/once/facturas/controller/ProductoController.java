@@ -47,159 +47,137 @@ class ProductoController {
     @Autowired
     ProductoRepository pr;
 
-/**
- * 
- * listado elementos
- * 
- */
-
+    /**
+     * 
+     * listado elementos
+     * 
+     */
 
     @GetMapping("/")
     public Iterable<Producto> getAllProductos() {
         return pr.findAll();
     }
 
+    /**
+     * 
+     * Borrado elemento
+     * 
+     */
 
-/**
- * 
- * Borrado elemento
- * 
- */
-   
-  @DeleteMapping("/{id}/")  // ("/{id}/{otroid}") 
-    public ResponseEntity borrarProducto(
-        @PathVariable("id") Long id) {
-      
-        try {  
-            
+    @DeleteMapping("/{id}/") // ("/{id}/{otroid}")
+    public ResponseEntity borrarProducto(@PathVariable("id") Long id) {
+
+        try {
+
             pr.deleteById(id);
 
-        }  catch  (EmptyResultDataAccessException e) {
-            
-            
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+        } catch (EmptyResultDataAccessException e) {
 
-        }   
-       
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
-
-/**
- * 
- * buscar elementos
- * 
- */
-
+    /**
+     * 
+     * buscar elementos
+     * 
+     */
 
     @GetMapping("/{id}/")
     public Producto getProducto(@PathVariable("id") Long id) {
         System.out.println("valor devuelto: " + pr.findById(id));
-/*
-        Optional<Producto> p = pr.findById(id);
+        /*
+         * Optional<Producto> p = pr.findById(id);
+         * 
+         * if (p.isEmpty()) return null;
+         * 
+         * return p.get();
+         * 
+         */
 
-        if (p.isEmpty())
-            return null;
-
-        return p.get();
-  
-  */
-        
-          try { return pr.findById(id).get(); 
+        try {
+            return pr.findById(id).get();
         } catch (NoSuchElementException e) {
-          return null; }
-         
+            return null;
+        }
 
     }
 
-/**
- * 
- * crear elementos
- * 
- */
-
-
-
+    /**
+     * 
+     * crear elementos
+     * 
+     */
 
     @PostMapping("/")
-    public Producto crearProducto( 
-        @RequestBody Producto producto
-     ) {
-         System.out.println(producto);
+    public Producto crearProducto(@RequestBody Producto producto) {
+        System.out.println(producto);
         Producto p = pr.save(producto);
         return p;
     }
 
+    /**
+     * 
+     * modificar elemento
+     * 
+     */
 
-/**
- * 
- * modificar elemento
- * 
- */
+    @PutMapping("/{id}/")
+    public Producto modificarProducto(@RequestBody Producto producto,
 
-@PutMapping("/{id}/")
-public Producto modificarProducto(@RequestBody Producto producto,
+            @PathVariable("id") Long id) {
 
-    @PathVariable("id") Long id) {
-
-        
         Optional<Producto> p = pr.findById(id);
 
         if (p.isEmpty())
             return null;
 
         else {
-             
-            
             Producto pmod = pr.findById(id).get();
-        
-             pmod.setDescripcion(producto.getDescripcion());
-             pmod.setFabricante(producto.getFabricante());
-             pmod.setPrecio(producto.getPrecio());
-         
-              pmod = pr.save(producto);
-                 
-               return  pmod; 
+            if (producto.getDescripcion() != null) {
+                pmod.setDescripcion(producto.getDescripcion());
+            }
+            if (producto.getFabricante() != null) {
+            pmod.setFabricante(producto.getFabricante());
+            }
+            if (producto.getPrecio() != null) {
+            pmod.setPrecio(producto.getPrecio());
+            }
+            pr.save(pmod);
+            return pmod;
         }
 
+        /*
+         * Producto p = pr.findById(id).get();
+         * 
+         * p.setDescripcion(producto.getDescripcion());
+         * p.setFabricante(producto.getFabricante()); p.setPrecio(producto.getPrecio());
+         * 
+         * p = pr.save(producto);
+         * 
+         * return p;
+         */
+    }
 
-   
-   
- /*  
-    Producto p = pr.findById(id).get();
-   
-    p.setDescripcion(producto.getDescripcion());
-    p.setFabricante(producto.getFabricante());
-    p.setPrecio(producto.getPrecio());
-
-     p = pr.save(producto);
-        
-      return  p;
-   */ 
-}
-
-
-
-
-
-/**
- * Mapeo inicial de prueba - leer elementos
- * 
- */    
+    /**
+     * Mapeo inicial de prueba - leer elementos
+     * 
+     */
     @GetMapping("/hello") // Escucho al GET en /hello
     @ResponseBody // Haré un body html para devolver la página completa
     public String hello() { // Método para devolver un string para responsebody
         return "Hola Mundo"; // Devuelvo Hola Mundo
     }
 
-/**
- * 
- * contar elementos 
- *
- */
-
-
+    /**
+     * 
+     * contar elementos
+     *
+     */
 
     @GetMapping("/count") // Escucho al GET en /count
     @ResponseBody // Haré un body html para devolver la página completa
