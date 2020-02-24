@@ -155,9 +155,10 @@ class ProductoController {
          * Producto p = pr.findById(id).get();
          * 
          * p.setDescripcion(producto.getDescripcion());
-         * p.setFabricante(producto.getFabricante()); p.setPrecio(producto.getPrecio());
+         * p.setFabricante(producto.getFabricante()); 
+         * p.setPrecio(producto.getPrecio());
          * 
-         * p = pr.save(producto);
+         * pr.save(p);
          * 
          * return p;
          */
