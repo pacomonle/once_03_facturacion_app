@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/api/productos")
-class ProductoController {
+public class ProductoController {
 
     /**
      * Escucha en las siguientes rutas:
